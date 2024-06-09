@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>body{margin:0;background-color:rgb(70,70,70);}
+div{background:black;width:20vw;height:10vh;position:absolute;}
+</style>
+</head>
+<body>
+<main id="main">
+    <div id="div" style="left:0;top:0;"></div>
+</main>
+<script>var x=0;var y=0;var colors= ['red','blue','green','pink','orange','yellow','purple'];var col=0;
+window.onload = setInterval(() => {go()}, 10);
+function go() {var div=document.getElementById('div');var props=div.getBoundingClientRect();var vw=window.innerWidth;var vh=window.innerHeight;
+var divx=parseInt(div.style.left);var divy=parseInt(div.style.top);
+if (divx >= vw-props.width){ x = 1;change_bg() } else if (divx == 0){ x = 0;change_bg() };
+if (x == 0){ divx += 2 } else { divx -= 2 };
+if (divy >= vh-props.height){ y = 1;change_bg() } else if (divy == 0){ y = 0;change_bg() };
+if (y == 0){ divy += 2 } else { divy -= 2 };
+div.style.left=divx + 'px';
+div.style.top=divy + 'px';
+//csik(divx,divy,x,y,div.style.background);
+}
+function change_bg() { div.style.background = colors[col];col += 1;if (col == colors.length){col = 0}; }
+function csik(divx,divy,x,y,col) {
+    var change = 0;
+    if(x==0){changex=-2}else{changex=2}
+    if(y==0){changey=-2}else{changey=2}
+    for (let i=1;i<6;i++){create_clone(divx+changex*i,divy+changey*i,col,1-0.2*i);}
+    console.log(col);
+}
+function create_clone(x,y,col,op){var i=0;
+document.getElementById('main').innerHTML += `<div id="${i}" style="left:${x};top:${y};background:${col};opacity:${op}"></div>`
+setTimeout(() => { document.getElementById('main').removeChild(document.getElementById(i));}, 50)
+}
+</script>
+</body>
+</html>
